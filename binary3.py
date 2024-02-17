@@ -1,21 +1,19 @@
 from automata.fa.dfa import DFA
 
 
-def eliminar_vacios(cadena):
-    return cadena.replace('b','')
-    
 #Definimos estados:
 estados = {'q0','q1','q2'}
 
 #Definimos alfabeto:
-alfabeto = {'0','1'}
+alfabeto = {'0','1','b'}
 
 #Definimos transiciones:
 transiciones = {
-    'q0':{'1':'q1','0':'q0'},
-    'q1':{'1':'q0','0':'q2'},
-    'q2':{'0':'q1','1':'q2'}
+    'q0':{'1':'q1','0':'q0','b':'q0'},
+    'q1':{'1':'q0','0':'q2','b':'q1'},
+    'q2':{'0':'q1','1':'q2','b':'q2'}
 }
+#Nota: Se implementa en cada estado un bucle para manejar la cadena vacía.
 
 #Definimos estado inicial:
 estado_inicial = 'q0'
@@ -36,10 +34,10 @@ automata = DFA(
 
 
 cadena = str(input(">>>"))
-cadena_nueva = eliminar_vacios(cadena)
 
-if automata.accepts_input(cadena_nueva):
+
+if automata.accepts_input(cadena):
     print(f"The DFA accepts the string '{cadena}'")
 
-elif automata.accepts_input(cadena_nueva) == False:
+elif automata.accepts_input(cadena) == False:
     print(f"The DFA rejects the string '{cadena}'")
